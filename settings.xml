@@ -7,4 +7,5 @@
     <peopleToNotify>
         <skypeId>echo123</skypeId>
     </peopleToNotify>
+    <shouldOpenBrowser>false</shouldOpenBrowser>
 </settings>
