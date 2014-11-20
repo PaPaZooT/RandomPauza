@@ -1,21 +1,14 @@
-import org.jsoup.Jsoup
+final String settingsFilePath = '../settings.xml'
+def settings = Settings.fromSettingsXml(settingsFilePath)
 
-neighbourhood = "zagreb-blato"
-htmlDocument = Jsoup.
-        connect("http://www.pauza.hr/" + neighbourhood)
-        .get()
+def parser = new RestaurantListParser("$settings.pauzaUrl$settings.neighbourhood")
+List restaurants = parser.getAllRestaurants()
+def filtered = restaurants.findAll(settings.createFilter())
 
-/*
-areaSelect = htmlDocument.getElementById("area_id")
-println areaSelect
+def picker = new RestaurantPicker(filtered)
+def restaurant = picker.pickRandom()
 
-areaSelectOptions = areaSelect.getElementsByTag("option")
-println areaSelectOptions
+//def informer = new SkypeLunchInformer(settings.skypeIds)
+//informer.inform(restaurant)
 
-for (areaSelectOption in areaSelectOptions)
-    println areaSelectOption.text()
-*/
-
-parser = new RestaurantListParser(htmlDocument)
-allRestaurants = parser.getAllRestaurants()
-println allRestaurants.size()
+println restaurant
